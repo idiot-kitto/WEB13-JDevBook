@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [ release ]
+    branches: [ test ]
 
   workflow_dispatch:
 
@@ -18,16 +18,12 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd WEB13-JDevBook && git pull origin release
+            cd WEB13-JDevBook && git pull origin test
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             cd server && npm install && pm2 restart npm -- start
             cd ../client && npm install && npm run build
             sudo service nginx restart
-            
-            
-
-     
